@@ -1,6 +1,5 @@
-# PruneScan-JCIA-Hackathon-2025
-
-# Tri Automatique des Prunes - JCIA Hackathon 2025
+# PruneScan - JCIA Hackathon 2025
+# Tri Automatique des Prunes
 
 Ce projet présente un système de classification d'images basé sur le deep learning pour trier automatiquement les prunes africaines selon leur qualité.
 
@@ -20,53 +19,35 @@ repository/
     └── [application Flutter]
 ```
 
-## Compréhension du problème
+## Guide d'exécution rapide
 
-Notre projet répond au défi du tri automatique des prunes africaines. Les challenges spécifiques incluent:
-- La détection précise de 6 catégories différentes de prunes (saines, non mûres, tachetées, pourries, meurtries, fissurées)
-- Le déséquilibre important entre les classes (certains défauts étant rares dans le dataset)
-- La nécessité d'un modèle suffisamment léger pour être déployé dans un environnement de production
+### Backend
 
-## Modèle choisi
+Le backend est implémenté sous forme de notebook Jupyter qui génère un modèle entraîné (`best_plum_model.h5`).
 
-Nous avons opté pour une architecture basée sur **MobileNetV2** pour les raisons suivantes:
-- Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
-- Performances élevées dans les tâches de classification d'images
-- Possibilité de transfert d'apprentissage à partir de poids pré-entraînés sur ImageNet
+1. **Installer les dépendances**:
+```bash
+pip install tensorflow opencv-python pandas numpy matplotlib seaborn scikit-learn tqdm jupyter
+```
 
-Notre architecture comprend:
-- MobileNetV2 comme modèle de base
-- Couches supplémentaires personnalisées avec régularisation L1-L2
-- Normalisation par lots et dropout pour réduire le surapprentissage
-- Fonction de perte Focal Loss pour gérer le déséquilibre des classes
+2. **Télécharger le dataset**:
+   - Téléchargez le dataset depuis Kaggle: [African Plums Quality Dataset](https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data)
+   - Placez-le dans le dossier `backend/african_plums_dataset/`
 
-## Méthodologie
+3. **Exécuter le notebook**:
+```bash
+cd backend
+jupyter notebook
+# Ouvrez et exécutez notebook.ipynb
+```
 
-### Prétraitement des données
-- Redimensionnement des images à 324×324 pixels
-- Normalisation des valeurs de pixel (0-1)
-- Augmentation de données agressive pour les classes minoritaires (rotation, translation, cisaillement, zoom, retournement, variation de luminosité)
+### Frontend
 
-### Division des données
-- 70% pour l'entraînement
-- 15% pour la validation
-- 15% pour le test
-- Division stratifiée pour maintenir la distribution des classes
-
-### Gestion du déséquilibre
-- Surreprésentation des classes minoritaires dans l'ensemble d'entraînement
-- Pondération des classes avec une puissance de 1.5 pour les classes 'bruised' et 'cracked'
-- Focal Loss avec gamma=2.0 pour se concentrer sur les exemples difficiles
-
-### Stratégie d'entraînement
-- Entraînement en trois phases:
-  1. Entraînement initial des couches supérieures (75 époques)
-  2. Premier fine-tuning avec les 30 dernières couches de MobileNetV2 dégelées (35 époques)
-  3. Deuxième fine-tuning avec toutes les couches dégelées (25 époques)
-- Utilisation de callbacks pour:
-  - Sauvegarde du meilleur modèle (ModelCheckpoint)
-  - Arrêt précoce pour éviter le surapprentissage (EarlyStopping)
-  - Réduction du taux d'apprentissage en plateau (ReduceLROnPlateau)
+1. **Exécuter l'application Flutter**:
+```bash
+cd frontend
+flutter run
+```
 
 ## Résultats obtenus
 
@@ -95,49 +76,55 @@ Notre modèle a atteint d'excellentes performances sur l'ensemble de test:
 - **unaffected**: 215 sur 259 échantillons
 - **unripe**: 102 sur 124 échantillons
 
-Les résultats montrent que notre modèle est particulièrement performant sur les classes 'rotten', 'unaffected' et 'unripe', avec une précision dépassant 90%. Les classes 'bruised', 'cracked' et 'spotted' présentent des défis plus importants, mais restent bien détectées grâce à notre stratégie de pondération spécifique.
+## Détails du projet
 
-## Instructions d'exécution
+### Compréhension du problème
 
-### Backend
+Notre projet répond au défi du tri automatique des prunes africaines. Les challenges spécifiques incluent:
+- La détection précise de 6 catégories différentes de prunes (saines, non mûres, tachetées, pourries, meurtries, fissurées)
+- Le déséquilibre important entre les classes (certains défauts étant rares dans le dataset)
+- La nécessité d'un modèle suffisamment léger pour être déployé dans un environnement de production
 
-Le backend est implémenté sous forme de notebook Jupyter qui génère un modèle entraîné (`best_plum_model.h5`).
+### Modèle choisi
 
-Pour exécuter le notebook:
-1. Assurez-vous d'avoir les dépendances installées:
-```bash
-pip install tensorflow opencv-python pandas numpy matplotlib seaborn scikit-learn tqdm jupyter
-```
+Nous avons opté pour une architecture basée sur **MobileNetV2** pour les raisons suivantes:
+- Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
+- Performances élevées dans les tâches de classification d'images
+- Possibilité de transfert d'apprentissage à partir de poids pré-entraînés sur ImageNet
 
-2. Naviguez vers le dossier backend:
-```bash
-cd backend
-```
-placer le dataset disponible sur Kaggle:https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data dans le dossier backend
-3. Lancez Jupyter Notebook:
-```bash
-jupyter notebook
-```
+Notre architecture comprend:
+- MobileNetV2 comme modèle de base
+- Couches supplémentaires personnalisées avec régularisation L1-L2
+- Normalisation par lots et dropout pour réduire le surapprentissage
+- Fonction de perte Focal Loss pour gérer le déséquilibre des classes
 
-4. Ouvrez et exécutez le notebook `notebook.ipynb`
+### Méthodologie
 
-Le notebook générera le fichier `best_plum_model.h5` qui sera utilisé par l'application frontend.
+#### Prétraitement des données
+- Redimensionnement des images à 324×324 pixels
+- Normalisation des valeurs de pixel (0-1)
+- Augmentation de données agressive pour les classes minoritaires (rotation, translation, cisaillement, zoom, retournement, variation de luminosité)
 
-### Frontend
+#### Division des données
+- 70% pour l'entraînement
+- 15% pour la validation
+- 15% pour le test
+- Division stratifiée pour maintenir la distribution des classes
 
-L'application frontend est développée avec Flutter.
+#### Gestion du déséquilibre
+- Surreprésentation des classes minoritaires dans l'ensemble d'entraînement
+- Pondération des classes avec une puissance de 1.5 pour les classes 'bruised' et 'cracked'
+- Focal Loss avec gamma=2.0 pour se concentrer sur les exemples difficiles
 
-Pour exécuter l'application:
-1. Assurez-vous que Flutter est installé sur votre système
-2. Naviguez vers le dossier frontend:
-```bash
-cd frontend
-```
-
-3. Exécutez l'application:
-```bash
-flutter run
-```
+#### Stratégie d'entraînement
+- Entraînement en trois phases:
+  1. Entraînement initial des couches supérieures (75 époques)
+  2. Premier fine-tuning avec les 30 dernières couches de MobileNetV2 dégelées (35 époques)
+  3. Deuxième fine-tuning avec toutes les couches dégelées (25 époques)
+- Utilisation de callbacks pour:
+  - Sauvegarde du meilleur modèle (ModelCheckpoint)
+  - Arrêt précoce pour éviter le surapprentissage (EarlyStopping)
+  - Réduction du taux d'apprentissage en plateau (ReduceLROnPlateau)
 
 ## Contact
 
