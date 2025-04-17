@@ -6,7 +6,7 @@ Ce projet présente un système de classification d'images basé sur le deep lea
 ## Équipe
 - LONTSI LAMBOU Ronaldino - lontsilambou@gmail.com
 - FETUE FOKO Nathanael - nathanaelfetue1237@gmail.com
-- TCHIAZE FOUOSSO Romero - 21T2474
+- TCHIAZE FOUOSSO Romero - romerotchiazefouosso@gmail.com
 
 ## Structure du Repository
 ```
