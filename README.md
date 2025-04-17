@@ -42,10 +42,19 @@ jupyter notebook
 ```
 
 ### Frontend
+1. **Installation de Flutter**
+Assurez-vous que Flutter est installé sur votre système. Si ce n'est pas le cas, suivez les instructions sur flutter.dev.
+2. **Installation des dépendances**
 
-1. **Exécuter l'application Flutter**:
+bash 
+cd PruneScan
+flutter pub get
+
+Exécution de l'application
+
+bash
+3. **Exécuter l'application Flutter**:
 ```bash
-cd frontend
 flutter run
 ```
 
