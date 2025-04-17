@@ -32,7 +32,7 @@ pip install tensorflow opencv-python pandas numpy matplotlib seaborn scikit-lear
 
 2. **Télécharger le dataset**:
    - Téléchargez le dataset depuis Kaggle: [African Plums Quality Dataset](https://www.kaggle.com/datasets/arnaudfadja/african-plums-quality-and-defect-assessment-data)
-   - Placez-le dans le dossier `backend/african_plums_dataset/`
+   - Placez-le dans le dossier `backend/`
 
 3. **Exécuter le notebook**:
 ```bash
