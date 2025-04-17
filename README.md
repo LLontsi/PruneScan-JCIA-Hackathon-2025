@@ -1,7 +1,7 @@
 # PruneScan - JCIA Hackathon 2025
 # Tri Automatique des Prunes
 
-Ce projet présente un système de classification d'images basé sur le deep learning pour trier automatiquement les prunes africaines selon leur qualité.
+Ce projet présente un système de classification d'images de prunes basé sur le deep learning pour trier automatiquement les prunes africaines selon leur qualité.
 
 ## Équipe
 - LONTSI LAMBOU Ronaldino - lontsilambou@gmail.com
@@ -97,7 +97,7 @@ Nous avons opté pour une architecture basée sur **MobileNetV2** pour les raiso
 - Possibilité de transfert d'apprentissage à partir de poids pré-entraînés sur ImageNet
 - Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
 - 
-Notre architecture comprend:
+Notre architecture du modele comprend:
 - MobileNetV2 comme modèle de base
 - Couches supplémentaires personnalisées avec régularisation L1-L2
 - Normalisation par lots et dropout pour réduire le surapprentissage
@@ -121,7 +121,7 @@ Notre architecture comprend:
 - Pondération des classes avec une puissance de 1.5 pour les classes 'bruised' et 'cracked'
 - Focal Loss avec gamma=2.0 pour se concentrer sur les exemples difficiles
 
-#### Stratégie d'entraînement
+#### Stratégie d'entraînement faite
 - Entraînement en trois phases:
   1. Entraînement initial des couches supérieures (75 époques)
   2. Premier fine-tuning avec les 30 dernières couches de MobileNetV2 dégelées (35 époques)
