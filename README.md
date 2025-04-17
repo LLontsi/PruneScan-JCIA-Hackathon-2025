@@ -50,9 +50,6 @@ Assurez-vous que Flutter est installé sur votre système. Si ce n'est pas le ca
 cd PruneScan
 flutter pub get
 ```
-Exécution de l'application
-
-bash
 3. **Exécuter l'application Flutter**:
 ```bash
 flutter run
