@@ -61,7 +61,6 @@ Notre modèle a atteint d'excellentes performances sur l'ensemble de test:
 
 ### Métriques globales:
 - **Accuracy**: 0.8419
-- **Loss**: 0.1098
 - **AUC**: 0.9712
 - **Precision**: 0.8641
 - **Recall**: 0.8168
@@ -94,10 +93,10 @@ Notre projet répond au défi du tri automatique des prunes africaines. Les chal
 ### Modèle choisi
 
 Nous avons opté pour une architecture basée sur **MobileNetV2** pour les raisons suivantes:
-- Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
 - Performances élevées dans les tâches de classification d'images
 - Possibilité de transfert d'apprentissage à partir de poids pré-entraînés sur ImageNet
-
+- Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
+- 
 Notre architecture comprend:
 - MobileNetV2 comme modèle de base
 - Couches supplémentaires personnalisées avec régularisation L1-L2
