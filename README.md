@@ -13,7 +13,7 @@ Ce projet présente un système de classification d'images basé sur le deep lea
 repository/
 ├── backend/
 │   ├── african_plums_dataset/
-│   ├── notebook.ipynb
+│   ├── prune.ipynb
 │   └── best_plum_model.h5
 └── frontend/
     └── [application Flutter]
