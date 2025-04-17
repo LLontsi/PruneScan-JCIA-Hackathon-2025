@@ -55,6 +55,68 @@ flutter pub get
 flutter run
 ```
 
+
+### Modèle
+
+Le cœur du projet repose sur un modèle de classification d'images basé sur l'architecture **MobileNetV2**, pré-entraînée sur ImageNet. Le modèle a été modifié et entraîné pour classer des images de prunes africaines selon leur qualité ou leurs défauts.
+
+## 🔧 Architecture
+* **Base** : `MobileNetV2` (poids pré-entraînés sur ImageNet, sans la couche de classification finale)
+* **Couches personnalisées** :
+   * `GlobalAveragePooling2D`
+   * `Dense(256)` + `BatchNormalization` + `Dropout(0.6)`
+   * `Dense(128)` + `BatchNormalization` + `Dropout(0.4)`
+   * `Dense(nb_classes, activation='softmax')` (couche de sortie)
+
+L'ensemble du modèle est régularisé avec `L1/L2` pour éviter l'overfitting.
+
+## ⚙️ Prétraitement et Augmentation
+Les données sont chargées avec `ImageDataGenerator`, incluant :
+* Normalisation (`rescale=1./255`)
+* Augmentations : rotation, translation, zoom, flips horizontaux
+* Validation split automatique (20%)
+
+## 📉 Fonction de perte
+Utilisation de la **Focal Loss** (avec `gamma=2.0`) pour mieux gérer le déséquilibre des classes, en concentrant l'apprentissage sur les classes minoritaires.
+
+## ⚖️ Gestion du déséquilibre des classes
+Des **poids de classes** sont calculés dynamiquement pour renforcer l'importance des classes sous-représentées (`bruised`, `cracked`, etc.), en utilisant une pondération ajustée à l'aide d'une exponentiation (`^1.5`) sur les classes les plus rares.
+
+## 🧠 Stratégie d'entraînement
+L'entraînement est réalisé en trois phases :
+
+1. **Entraînement initial**
+   * Couches personnalisées uniquement (MobileNetV2 gelé)
+   * `75 epochs`
+   * Optimiseur : `Adam`, avec LR réduit
+   * Callbacks : `EarlyStopping`, `ReduceLROnPlateau`, `ModelCheckpoint`
+
+2. **Fine-tuning partiel**
+   * Dégel des **30 dernières couches** de MobileNetV2
+   * Recompilation du modèle
+   * `35 epochs`
+
+3. **Fine-tuning complet**
+   * Dégel complet de MobileNetV2
+   * Recompilation finale
+   * `25 epochs`
+
+Chaque phase conserve les meilleurs poids grâce à `ModelCheckpoint`.
+
+## 📊 Évaluation et métriques
+Pendant l'entraînement, les métriques suivantes sont surveillées :
+* `Accuracy`
+* `AUC`
+* `Precision`
+* `Recall`
+
+Un graphique est généré pour visualiser les **poids de classe** appliqués, illustrant leur importance dans le traitement du déséquilibre.
+
+## 💾 Modèle final
+Le meilleur modèle est sauvegardé automatiquement sous le nom : `best_plum_model.h5`
+
+
+
 ## Résultats obtenus
 
 Notre modèle a atteint d'excellentes performances sur l'ensemble de test:
