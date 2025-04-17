@@ -155,8 +155,8 @@ Notre projet répond au défi du tri automatique des prunes africaines. Les chal
 ### Modèle choisi
 
 Nous avons opté pour une architecture basée sur **MobileNetV2** pour les raisons suivantes:
+-Nous avons choisi MobileNetV2 comme modèle de base pour le transfert learning car il a déjà été entraîné sur un dataset de classification de fruits contenant 14 classes, dont celle des prunes. Selon l’article "Fruit Image Classification Model Based on MobileNetV2 with Deep Transfer Learning Technique" (publié le 19 janvier 2023), MobileNetV2 a surpassé des modèles populaires tels que ResNet, InceptionV3, AlexNet et VGG16 en termes de taux de précision, justifiant ainsi son efficacité pour ce type de tâche.
 - Performances élevées dans les tâches de classification d'images
-- Possibilité de transfert d'apprentissage à partir de poids pré-entraînés sur ImageNet
 - Efficacité computationnelle (adapté pour le déploiement sur des appareils à ressources limitées)
 - 
 Notre architecture du modele comprend:
